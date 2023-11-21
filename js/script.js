@@ -8,7 +8,7 @@ const wordProgress = document.querySelector(".word-in-progress");
 const letterInput = document.querySelector(".letter");
 
 let word = "magnolia";
-const guessedLetters = [];
+let guessedLetters = [];
 let remainingGuesses = 8;
 
 const getWord = async function () {
@@ -135,8 +135,33 @@ const checkWin = function () {
     if (word.toUpperCase() === wordProgress.innerText) {
         message.classList.add("win");
         message.innerHTML = `<p class="highlight">You guessed the word correct! Congrats!</p>`;
+        startOver();
     }
 };
 
+//Create a Function to Hide and Show Elements
+const startOver = function () {
+    guessButton.classList.add("hide");
+    remainGuess.classList.add("hide");
+    guessedLettersElement.classList.add("hide");
+    playAgain.classList.remove("hide");
+};
 
-
+// Add a Click Event to the Play Again Button
+playAgain.addEventListener("click", function () {
+    // reset all original values - grab new word
+    message.classList.remove("win");
+    message.innerText = "";
+    guessedLettersElement.innerHTML = "";
+    remainingGuesses = 8;
+    guessedLetters = [];
+    remainGuessSpan.innerText = `You have ${remainingGuesses} guesses.`;
+      // Grab a new word
+  getWord();
+    
+   // show the right UI elements
+    guessButton.classList.remove("hide");
+    remainGuess.classList.remove("hide");
+    guessedLettersElement.classList.remove("hide");
+    playAgain.classList.add("hide");
+});
